@@ -45,6 +45,8 @@ object Versions {
     const val retrofit = "2.9.0"
     const val robolectric = "4.3.1"
     const val room = "2.4.0-alpha03"
+    const val rxAndroid = "3.0.0"
+    const val rxJava = "3.1.1"
     const val timber = "4.7.1"
     const val transition = "1.4.1"
     const val vectorDrawable = "1.2.0-alpha02"

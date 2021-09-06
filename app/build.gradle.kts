@@ -47,6 +47,8 @@ dependencies {
     implementation(Dependencies.GoogleMaps.runtime)
     implementation(Dependencies.GoogleMaps.ktx)
     implementation(Dependencies.GoogleMaps.utils)
+    implementation(Dependencies.RxJava.runtime)
+    implementation(Dependencies.RxJava.android)
 
 //    debugImplementation(Dependency.leakCanary)
 

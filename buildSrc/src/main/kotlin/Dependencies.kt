@@ -154,6 +154,11 @@ object Dependencies {
         const val testing = "androidx.room:room-testing:${Versions.room}"
     }
 
+    object RxJava {
+        const val runtime = "io.reactivex.rxjava3:rxjava:${Versions.rxJava}"
+        const val android = "io.reactivex.rxjava3:rxandroid:${Versions.rxAndroid}"
+    }
+
     object Work {
         const val runtime = "androidx.work:work-runtime-ktx:${Versions.work}"
         const val testing = "androidx.work:work-testing:${Versions.work}"

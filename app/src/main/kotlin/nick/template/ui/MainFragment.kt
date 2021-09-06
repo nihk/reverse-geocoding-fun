@@ -8,12 +8,12 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.maps.android.ktx.awaitMap
-import nick.template.R
-import nick.template.databinding.MainFragmentBinding
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import nick.template.R
+import nick.template.data.plusAssign
+import nick.template.databinding.MainFragmentBinding
 import nick.template.geo.Location
 
 class MainFragment @Inject constructor(
@@ -21,6 +21,7 @@ class MainFragment @Inject constructor(
 ) : Fragment(R.layout.main_fragment) {
     private val viewModel: MainViewModel by viewModels { vmFactory.create(this) }
     private var mapView: MapView? = null
+    private val disposable = lifecycle.disposeOnDestroy()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = MainFragmentBinding.bind(view)
@@ -33,8 +34,9 @@ class MainFragment @Inject constructor(
             onMapLoaded(map)
         }
 
-        viewModel.locations
-            .onEach { location ->
+        disposable += viewModel.locations
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { location ->
                 binding.location.text = when (location) {
                     is Location.Found -> """
                         ${location.address},
@@ -44,7 +46,6 @@ class MainFragment @Inject constructor(
                     Location.Unknown -> "Unknown"
                 }
             }
-            .launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onMapLoaded(map: GoogleMap) {
